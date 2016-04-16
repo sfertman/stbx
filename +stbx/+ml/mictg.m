@@ -1,4 +1,4 @@
-function [ output_args ] = mictg( X, Y )
+function [ output_args ] = mictg( varargin )
 %+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
 % MICTG computes the mutual information between categorical and real random
 % variables. Copyright (C) 2016 Alexander Fertman.
@@ -21,17 +21,17 @@ function [ output_args ] = mictg( X, Y )
 %+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
 % MICTG computes the mutual information between categorical and real random
 % variables.
-% MICTG(X,Y)
-% X can be any numeric
-% Y can be: 
-%   categorical
-%   cellstr
-%   integer
-%   
-
-
+% Usage posibilities:
+% MICTG(X,C) --- X is data, C is category specification. C can be a vector of
+%   several types which may be considered categorical: any type of integer,
+%   cell array of strings (cellstr) and Matlab's builtin categorical array.
+%   Every data point must be assigned with a category, i.e., X and G must 
+%   have the same length.
+% MICTG(V1,V2,V3,...) --- assumes that the inputs V1,V2,V3,... are data 
+%   points given categories C1,C2,C3,... implicitly specified by the number
+%   of input vectors.
+%
 % <TODO> 
-
 % detailed help file to characterize all aspects of this function that need
 % to be written
 % </TODO>
@@ -40,6 +40,58 @@ function [ output_args ] = mictg( X, Y )
 % C is categorical and X is numeric continuous / descrete or ordinal 
 % X and C are column vectors 
 % X and C do not have NaNs inside
+
+validTypesForC = {'categorical', 'cellstr', 'integer'};
+validateType = @(u) iscategorical(u) || ...
+                    iscellstr(u) || ...
+                    isinteger(u); 
+
+%% figuring out inputs
+if nargin < 2
+    error('Not enough inputs.')
+elseif nargin == 2
+    if isnumeric(varargin{1})
+        assert(...
+            isvector(varargin{1}) && isvector(varargin{2}) && ...
+            length(varargin{1}) == length(varargin{1}), ...
+            'Inputs must be vectors of the same length.' );
+        
+%         CvarIdx = cellfun(@(u) isany(u, validTypesForC), varargin);
+        CvarIdx = cellfun(@(u) validateType(u), varargin);
+        switch sum(CvarIdx)
+            case 0
+                error('Only the following types are supported for now: %s.', strcatDelim(validTypesForC));
+            case 1
+                X = varargin{~CvarIdx}; assert(isnumeric(X), 'Continuous variable must be numeric non-integer.');
+                G = varargin{CvarIdx}; 
+                % <TODO> split X into a bunch of arrays according to C
+                % </TODO>
+            case 2
+                error('Only one categorical variable allowed.');
+        end
+     end
+else % if nargin > 2
+    assert(all(cellfun(@(u) iscolumn(u) && isnumeric(u), varargin)), 'If 3 or more inputs, all inputs must be numeric column vectors.')
+%     X = varargin;
+    X = vertcat(varargin{:}); % numeric variable
+    G = int32(1:length(varargin)); % categorical variable (maybe I don't even need it)
+end
+
+% -- put X and C cells into one big vector X and vector C
+% -- sort both vectors by X
+[X, I] = sort(X);
+G = G(I);
+% -- divide vectors again by C
+[uG, ~, IuG] = unique(G);
+% G = uG(IuG)
+X = arrayfun(@(i) X(IuG == i,:), unique(IuG), 'UniformOutput', false);
+
+%% mi calculation
+
+% get the index of the nearest neighbour of each elment of X
+[~, i_knn] = cellfun(@(x) stbx.ml.knn(x, 1, 'sort'), X, 'UniformOutput', false);
+
+return
 
 assert(isvector(X) && isvector(Y) && length(X) == length(Y), 'Inputs must be vectors of the same length.');
 assert(isnumeric(X),'First input must be numeric.')

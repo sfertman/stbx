@@ -20,9 +20,6 @@ function out = iffun(varargin)
 %
 % Number of inputs must be equal or greater than 3
 %
-% Important note: THIS FUNCTION TAKES condI AS THEY ARE!! IF CELLSTR OR
-% SOMETHING WILL *NOT* COMPARE EACH MEMBER -- YOU GOT TO RIG THAT
-% EXTERNALLY USING CELLFUN AND/OR CELLSTRSPEEDBOOST.
 %
 % See also, if, switchfun
 

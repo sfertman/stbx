@@ -49,7 +49,7 @@ set(ax,'YDir','reverse');
 colorbar
 %%
 tic
-[nn, XX] = stbx.roboschool.clusterBlkdiag(C);
+[nn, XX] = stbx.ml.clusterBlkdiag(C);
 toc
 %%
 f = figure; set(f,'Renderer', 'zbuffer')

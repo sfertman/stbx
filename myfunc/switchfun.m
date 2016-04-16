@@ -21,27 +21,6 @@ function out = switchfun(varargin)
 %
 % out = switchfun(switch_expr, case_expr, return_val, {case_expr1, case_expr2, case_expr3,...}, return_val_n, ..., default_val)
 %
-%
-% Important note: THIS FUNCTION TAKES switch_expr AS IT IS!! IF CELLSTR OR
-% SOMETHING, IT WILL *NOT* COMPARE EACH MEMBER -- YOU GOT TO RIG THAT
-% EXTERNALLY USING CELLFUN AND/OR CELLSTRSPEEDBOOST.
-%
-% //TODO: make it works faster for the special case when strings are being 
-% compared; e.g.
-%   switch var
-%       case {'hello', 'good-buy'}
-%           ...
-%       case 'greetings'
-%           ...
-%       .
-%       .
-%       .
-%       otherwise
-%           ...
-%   end
-%
-% *** This can be besically done by replacing the inner function "isequal_"
-% with "strcmp" in case the switch expr and all cases are strings.
 
 if nargin == 0
     help(mfilename);
@@ -56,7 +35,11 @@ end
 
 case_exprs   = varargin(1:2:end-1); % get case expressions 
 return_vals  = varargin(2:2:end);   % get return values for each case expr
-return_val_ind = find(cellfun(@(u) any(isequal_(switch_expr, u)), case_exprs),1,'first'); % compare switch_expr with each case_exprs and return the first one that works
+if ischar(switch_expr) || iscellstr(switch_expr) && isscalar(switch_expr)
+    return_val_ind = find(cellfun(@(u) any(strcmp(switch_expr, u)), case_exprs),1,'first'); % compare switch_expr with each case_exprs and return the first one that works
+else
+    return_val_ind = find(cellfun(@(u) any(isequal_(switch_expr, u)), case_exprs),1,'first'); % compare switch_expr with each case_exprs and return the first one that works
+end
 
 if ~isempty(return_val_ind)
     out = return_vals{return_val_ind};

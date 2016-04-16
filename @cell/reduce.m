@@ -1,4 +1,5 @@
 function b = reduce( a )
+warning('Use stbx.data.compress instead')
 assert(iscellstr(a), 'cell/reduce supports cellstr types only.')
 if isempty(a), 
     b = {}; 

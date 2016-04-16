@@ -91,7 +91,7 @@ classdef column < handle % cuz lots of data is going to be inside each
                     % 
                     %
                     error(stbx.mrdb.globalconst.err_underConstruction);
-                case stbx.mrdb.COL_TYPE.NOM % nominal/categorical critical
+                case stbx.mrdb.COL_TYPE.CTG % nominal/categorical critical
                     assert(iscolumn(data_), stbx.mrdb.column.err_datatypeMismatch); % make sure it actually is a column
                     
                     % allowed inputs:

@@ -1,4 +1,4 @@
-function [ N, I ] = knn( X, varargin )
+function [ N, I ] = knn( X, K, sortFlag) %varargin )
 %+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
 % KNN returns K of the nearest neighbours of each member in X. Copyright
 % (C) 2016 Alexander Fertman.
@@ -29,8 +29,10 @@ function [ N, I ] = knn( X, varargin )
 %   returns them in N.
 % [N, I] = KNN(X, ...) -- returns the neigbours in array N and linear
 %   indexing locations of these neighbours within X in array I.
-% KNN(X,K,'sorted') -- returns output in sorted order
+% KNN(X,K,'sort') -- returns output in sorted order
+%
 % --- not yet implemented below this point ---
+%
 % KNN(X,K,SORTFLAG,DISTFUN) -- calculates the distances to find nearest
 %   elements using finction DISTFUN. DISTFUN must return a single scalar
 %   value for each pair of elements it accepts. If X is multidimensional,
@@ -41,17 +43,35 @@ function [ N, I ] = knn( X, varargin )
 % See also:
 %   max, sum
 
-p = inputParser;
-addOptional(p,'K', 1, @isnumeric);
-addOptional(p,'isSortRequested', [], @(u) isempty(u) || ischar(u) && strcmpi(u,'sorted'));
-% addOptional(p,'distfun', @(u) norm(u,2), @(u) isa(u, 'function_handle'))
-parse(p,varargin{:});
-K = p.Results.K;
-if ~isempty(p.Results.isSortRequested)
+if nargin == 0 
+    dbs = dbstack;
+    help(dbs(end).name);
+    return
+end
+
+if ~exist('K','var') || isempty(K) 
+    K = 1;
+end
+
+if ~exist('sortFlag', 'var') || isempty(sortFlag)
+    isSortRequested = false;
+elseif ischar(sortFlag) && strcmpi(sortFlag, 'sort')
     isSortRequested = true;
 else
-    isSortRequested = false;
+    error('Problem in 3rd input. Can be either "sort" or empty.');
 end
+    
+% p = inputParser;
+% addOptional(p,'K', 1, @isnumeric);
+% addOptional(p,'isSortRequested', [], @(u) isempty(u) || ischar(u) && strcmpi(u,'sort'));
+% % addOptional(p,'distfun', @(u) norm(u,2), @(u) isa(u, 'function_handle'))
+% parse(p,varargin{:});
+% K = p.Results.K;
+% if ~isempty(p.Results.isSortRequested)
+%     isSortRequested = true;
+% else
+%     isSortRequested = false;
+% end
 
 % total number of members in X
 [L,D] = size(X);
