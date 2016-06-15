@@ -4,7 +4,6 @@ function [dataOut, keysOut, varsOut] = cases2vars( data, keyVars, idxVars )
 %   (-) numerical matrix
 %   (-) cell array of mixed numerical and categorical (cellstr /
 %       cetegorical / integer)
-%   (-) <TODO> Matlab builtin table class should be supported too </TODO>
 %
 % keyVars -- column(s) of variable(s) that must uniquely identify cases
 %   within case groups determined by indexVars after restructring
@@ -24,20 +23,6 @@ function [dataOut, keysOut, varsOut] = cases2vars( data, keyVars, idxVars )
 %
 % data_out -- restructured tabular data of the same type as input data.
 %
-% <TODO> 
-% (-) need to add some sanity checks:
-%   (-) keyVars must uniquely identify records after reconstruction
-
-
-%%% algorithm:
-% - group data by indexVars (use: stbx.data.group_by)
-% - sort ascending each group
-% - merge the sorted groups by IDvars
-
-% idxVars_logic = any(bsxfun(@eq, 1:size(data,2), idxVars(:)), 1);
-% keyVars_logic = any(bsxfun(@eq, 1:size(data,2), keyVars(:)), 1);
-% dataIdx_logic = ~(idxVars_logic & keyVars_logic);
-
 
 if iscellstr(keyVars)
     [keysOut, ~, IC] = uniquerows_cellstr(keyVars,'sorted');

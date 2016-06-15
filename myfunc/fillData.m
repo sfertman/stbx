@@ -1,11 +1,11 @@
 function y_out = fillData(y_in, dim)
 %
-% function y_out = fillData_(y_in, dim)
+%> function y_out = fillData_(y_in, dim)
 %
-% Completes data with the previous last good value.
+%> Completes data with the previous last good value.
 %
-% y_in .... original data with NaNs indicating missing data
-% dim ..... dimention of data series for completion:
+%> y_in .... original data with NaNs indicating missing data
+%> dim ..... dimention of data series for completion:
 %           if dim == 1 or 'col', will consider each col as independent data series
 %           if dim == 2 or 'row', will consider each row as independent data series
 % y_out ... the completed data series

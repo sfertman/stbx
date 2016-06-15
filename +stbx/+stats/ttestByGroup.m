@@ -3,13 +3,17 @@ function [ H, P, CI, STATS, B, C ] = ttestByGroup( X, G, varargin )
 % G.
 
 % <TODO> 
-% add option to decide between paired and unpaired ttest (i.e. between
-% ttest(...) and ttest2(...)
+% - add option to decide between paired and unpaired ttest (i.e. between
+%   ttest(...) and ttest2(...)
+% - add option to make corrections. 'Bonferroni' sems like a good way to
+%   start ( given n groups, we're looking at (n^2 - n)/2 pairwise
+%   comparissons ). There are many more corrections to Family-wise error 
+%   rate (search FWER)
 %</TODO>
 [B, C] = stbx.data.group_by(X,G);
 
 N = length(B); % number of groups
-% [H,P,CI,STATS]
+% [H,P,CI,STATS] init
 H = zeros(N);
 P = ones(N);
 CI = cell(N);

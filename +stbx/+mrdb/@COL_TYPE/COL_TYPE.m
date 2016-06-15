@@ -25,7 +25,8 @@ classdef COL_TYPE < double
         MAT (17)    % numeric matrix (2d) -- stored as 3d array where dims 1 and 2 represent the matrices, and dim 3 represents position in column
         LST (18)    % a list - STORED IN A DATA TYPE I HAVEN'T INVENTED YET - a cell of vectors maybe  
         STR (19)    % structure -- stored as structure array
-        OBJ (20)    % any object of the same class -- stored as an object array
+        FUN (20)    % function_handle -- stored as cell array of function handles
+        OBJ (21)    % any object of the same class -- stored as an object array
 
     end
 

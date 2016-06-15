@@ -1,17 +1,14 @@
 function phi = rbf( r, a, func )
-% //TODO: make this thing work on 2D matrix r and 1D vector a as well to
-% match the description in help section below
-%
-% RBF - radial basis function. This function works only with the infinitely
+% RBF - radial basis function. This function works only with infinitely
 % smooth kernels, i.e. these guys:
 %
-% Gaussian (GA): exp(-(a*r).^2)
-% Inverse Quadratic (IQ): 1./(1 + (a*r).^2)
-% Inverse multiquadratic (IMQ): 1./sqrt(1 + (a*r).^2)
-% Multiquadratic (MQ): sqrt(1 + (a*r).^2)
+%   Gaussian (GA): exp(-(a*r).^2)
+%   Inverse Quadratic (IQ): 1./(1 + (a*r).^2)
+%   Inverse multiquadratic (IMQ): 1./sqrt(1 + (a*r).^2)
+%   Multiquadratic (MQ): sqrt(1 + (a*r).^2)
 %
 % Inputs:
-%   r - the radius, can be any real number (acalar, vector or matrix)
+%   r - the radius, can be any real number (scalar, vector or matrix)
 %   a - scaling parameter, any real number (although usually in (0,1] )
 %   func - a string identifier of the radial function to be used, any of
 %       the above mentioned, 'ga', 'iq', 'imq' or 'mq'

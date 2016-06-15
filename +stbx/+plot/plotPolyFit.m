@@ -3,6 +3,14 @@ function [h_polyPlot, polyCoef] = plotPolyFit( ax, p, N )
 % h_polyPlot -- handles to plotted lines
 % coeff -- list of polynom coefficients
 
+
+% <TODO>
+% (-) For input parsing use the following instead: 
+%   [ax, varargin] = axescheck(varargin{:}); and go from there to figure 
+%   out 'p' and 'N'.
+% (-) return residuals 
+% (- return R^2 (norm of residuals) meausre for the requested regression
+
 if ~exist('ax','var')
     ax = gca;
 end

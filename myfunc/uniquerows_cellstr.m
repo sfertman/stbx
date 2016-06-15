@@ -6,6 +6,10 @@ function [C, IA, IC] = uniquerows_cellstr(A, SORTFLAG)
 % See also: 
 %   unique
 
+% <TODO> 
+% - make this this work as similarly as possible to builtin
+%   UNIQUE(..., 'rows').
+
 if ~exist('SORTFLAG', 'var')
     SORTFLAG = 'sorted';
 else

@@ -1,4 +1,4 @@
-function [ N, I ] = knn( X, K, sortFlag) %varargin )
+function [ N, I ] = knn( X, K, SORTFLAG) %varargin )
 %+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
 % KNN returns K of the nearest neighbours of each member in X. Copyright
 % (C) 2016 Alexander Fertman.
@@ -53,26 +53,14 @@ if ~exist('K','var') || isempty(K)
     K = 1;
 end
 
-if ~exist('sortFlag', 'var') || isempty(sortFlag)
+if ~exist('SORTFLAG', 'var') || isempty(SORTFLAG)
     isSortRequested = false;
-elseif ischar(sortFlag) && strcmpi(sortFlag, 'sort')
+elseif ischar(SORTFLAG) && strcmpi(SORTFLAG, 'sort')
     isSortRequested = true;
 else
     error('Problem in 3rd input. Can be either "sort" or empty.');
 end
     
-% p = inputParser;
-% addOptional(p,'K', 1, @isnumeric);
-% addOptional(p,'isSortRequested', [], @(u) isempty(u) || ischar(u) && strcmpi(u,'sort'));
-% % addOptional(p,'distfun', @(u) norm(u,2), @(u) isa(u, 'function_handle'))
-% parse(p,varargin{:});
-% K = p.Results.K;
-% if ~isempty(p.Results.isSortRequested)
-%     isSortRequested = true;
-% else
-%     isSortRequested = false;
-% end
-
 % total number of members in X
 [L,D] = size(X);
 
@@ -123,7 +111,7 @@ if ~isSortRequested
     [~, iXs] = sort(iX); % X = Xs(iXs) transforms back to the original order
     N = N(iXs, :, :);
     if nargout == 2 
-        % make sure I is in original order also
+        % make sure it is in original order also
         I = I(iXs, :);
     end
 end

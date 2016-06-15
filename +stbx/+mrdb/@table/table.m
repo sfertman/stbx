@@ -1,7 +1,7 @@
 classdef table < handle
 
     properties (SetAccess = protected)
-        data; % an array of tbl_col objects - must be an array, otherwise we have to track everything from this class and it's a drag 
+        data@column; % an array of tbl_col objects - must be an array, otherwise we have to track everything from this class and it's a drag 
         % // TODO make sure the columns can be accessed by name - map or something
     end
     
@@ -35,50 +35,48 @@ classdef table < handle
         
         
         function this = addcol(this, col_names, col_types, col_data)
-            % mrdb.table.addcol(col_names, col_types, col_data)
-            %   adds columns given by col_names, col_types and col_data to
-            %   our table
-            % mrdb.table.addcol([], col_types, col_data)
-            %   if col_names not given generates column names automatically:
-            %   'col1', 'col2', ...
-            % mrdb.table.addcol(col_names, [], col_data)
-            %   if col_types not given stores data as stbx.mrdb.col_type.GEN
-            %
-            % All inputs must exist.
-            %
-            % Further explanation of input variable and behaviors
-            % ---------------------------------------------------
-            % col_names: names of column, the number of names given must be
-            %    equal to the number of columns given. 
-            % col_type: emnumerated stbx.mrdb.col_type, 
-            % (*) if scalar, all columns are inserted using this type
-            % (*) if vector must be of equal length to the number of
-            %     columns
-            % ---------------------------------------------------------------------
-            % *** The following must be implemented in stbx.mrdb.column class ***
-            % ---------------------------------------------------------------------
-            % col_data: the columns we want to add to our table
-            % this could consist of many different data types, some of
-            % which will result insertion with particular behavior(s).
-            % addcol works with the following input types:
-            % (*) object array of stbx.mrdb.column - inserted as is
-            % (-) cell arrays of
-            %     + stbx.mrdb.column   - as is
-            %     - numeric vectors    - as stbx.mrdb.col_type.NUM
-            %     - cellstr            - as strings or categorical as
-            %                            designated in col_types
-            %     - mixed vector types - as numeric and str/ctg respectively
-            %     - mixed type vectors - as GEN
-            % (-) numeric matrix / cell matrix - columns taken as numeric 
-            %                                    stbx.mrdb.column objects
-            % (-) mixed cell matrix 
-            % or anything mixed
-            % of cellstr
+% mrdb.table.addcol(col_names, col_types, col_data)
+%   adds columns given by col_names, col_types and col_data to our table
+% mrdb.table.addcol([], col_types, col_data)
+%   if col_names not given generates column names automatically: 'col1',
+%   'col2', ...
+% mrdb.table.addcol(col_names, [], col_data)
+%   if col_types not given stores data as stbx.mrdb.col_type.GEN
+%
+% All inputs must exist.
+%
+% Further explanation of input variable and behaviors
+% ---------------------------------------------------
+% col_names: names of column, the number of names given must be equal to
+%   the number of columns given.
+% col_type: emnumerated stbx.mrdb.col_type, 
+% (*) if scalar, all columns are inserted using this type
+% (*) if vector must be of equal length to the number of
+%     columns
+% ---------------------------------------------------------------------
+% *** The following must be implemented in stbx.mrdb.column class ***
+% ---------------------------------------------------------------------
+% col_data: the columns we want to add to our table this could consist of
+% many different data types, some of which will result insertion with
+% particular behavior(s). addcol works with the following input types:
+% (*) object array of stbx.mrdb.column - inserted as is
+% (-) cell arrays of
+%     + stbx.mrdb.column   - as is
+%     - numeric vectors    - as stbx.mrdb.col_type.NUM
+%     - cellstr            - as strings or categorical as
+%                            designated in col_types
+%     - mixed vector types - as numeric and str/ctg respectively
+%     - mixed type vectors - as GEN
+% (-) numeric matrix / cell matrix - columns taken as numeric 
+%                                    stbx.mrdb.column objects
+% (-) mixed cell matrix 
+% or anything mixed
+% of cellstr
             
             [~,nC] = size(col_data); % ~ - num of rows is not clear at this point, nC - num of cols
             
             %%% deal with column names
-            wasEmptyComNames = false;
+            wasEmptyColNames = false;
             if isempty(col_names)
                 col_names = (cellstr('col_' + num2str((1:nC)')).\' ').';
                 wasEmptyColNames = true;
