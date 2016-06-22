@@ -2,7 +2,7 @@ function hpdf = histw_pdf(D, C, B)
 % HISTW_PDF returns a function handle to pdf estimated by weigted histogram
 % D -- assumes 1d data transformed to col
 % W -- aussmes 1d data transformed to col
-% B -- used to construct histogram
+% B -- bins used to construct histogram
 %
 % See also:
 %   hist, ecdf

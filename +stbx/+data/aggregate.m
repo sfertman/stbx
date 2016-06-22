@@ -15,8 +15,8 @@ function [ output_args ] = aggregate( X, G, F, C )
 % F can be one function_handle or cell array of function_handle. In the
 %   former case, F will be applied with all aggregation levels (columns in
 %   G); in the latter case F must be equal in size to the number of columns
-%   in G and each function will be applie with its coresponding aggregation
-%   level. If F is not defined, default @sum is used.
+%   in G and each function will be applied with its coresponding
+%   aggregation level. If F is not defined, default @sum is used.
 %
 % C is a scalar (integer) number between 1 and size(G,2) and it specifies
 %   the index of the column in G according to which output is collected. If

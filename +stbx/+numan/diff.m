@@ -6,7 +6,7 @@ switch lower(method)
     case 'forward'
 
     case 'central'
-        dX = diff_central(func, N);
+        dX = diff_central(func, X, N);
     otherwise
         error('Unknown method.')
 end
@@ -16,16 +16,23 @@ end
 function dX = diff_backward(X, N)
 end
 
-function dX = diff_central(X, N)
+function dX = diff_central(f, X, N)
 % 2nd derivative case:
 % f''(x) ~ ( f(x+h) - 2f(x) + f(x-h) ) / h^2
 % OR 
 % f''(x) ~ ( X(i+1) - 2X(i) + x(i-1) ) / 1^2 % cuz we don't have x and y axes
-    ii = 0:N;
-    dX = sum( (-1).^ii.*n_over_k(N, ii).*X
+
+h = get_h(N);
+ii = (0:N).';
+dX = sum(((-1).^ii).*n_over_k(N, ii).*f(x + (0.5*N - ii)*h))/h^N;
 end
 
 function dX = diff_forward(X, N)
+end
+
+function h = get_h(~)
+% allow for more sophistication later on
+h = 1e-8;
 end
 
 function nok = n_over_k(n, k)
