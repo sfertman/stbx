@@ -1,5 +1,5 @@
 function hpdf = hist_pdf(D, bins)
-% HISTPMF returns a function handle to pmf estimated by histogram
+% HIST_PDF returns a function handle to pmf estimated by histogram
 % X -- assumes 1d data transformed to col
 
 [N,X] = hist(D,bins);

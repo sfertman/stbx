@@ -3,7 +3,7 @@
 % the goal is to eventually support all possible Matlab/Octave classes and 
 % cases.
 %
-% This functoin will save time if you need to make a large number of 
+% This function will save time if you need to make a large number of 
 % references to small portion of you array. For small number of references
 % to large portions of array, cellfun is faster (see below).
 %   

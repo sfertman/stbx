@@ -32,7 +32,7 @@ function varargout = group_by( X, G, SORTFLAG )
 % <TODO>
 % - need to decide what to do when missing labels in grouping arrays are
 %   encountered. Most obvious solution is to ignore the data where labels
-%   are missing, i.e., <undefined>, NaN, {''}, {[]}, etc...
+%   are missing, e.g., <undefined>, NaN, {''}, {[]}, etc...
 % - for now we assume that X is at most 2D. make it work with X having any
 %   dimensionality.
 % - add option to specify group variables by index from within X.

@@ -15,7 +15,11 @@ end
 
 assert(all(round(C)==C), 'Counts must be given as integers.')
 
+% calculate conditional probabilities
 pX = f(D).^C;
+% make sure that no probability is zero
+pX(pX == 0) = min(pX(pX~=0))/1e6; 
+
 
 if strcmpi(LOGFLAG, 'log')
     L = sum(log(pX));
