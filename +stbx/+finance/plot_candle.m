@@ -34,7 +34,7 @@ elseif nargin == 5
 elseif nargin == 6
     [open_, close_, high_, low_, vol_, t] = deal(varargin{:});
 else
-    error('Wrong number of inputs.')
+    error(stbx.commons.err.inputs_wrongNumber).
 end
 
 if ~exist('t', 'var');
