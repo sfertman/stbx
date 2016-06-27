@@ -8,6 +8,8 @@ classdef err
         %%% make sure error identifiers do not begin with a number!
         underConstruction = struct('identifier', {'stbx:commons:err999'}, 'message', {'This feature is not yet implemented.'})
         superunknown = struct('identifier', {'stbx:comons:err998'}, 'message', {'This should not be happening... Some debugging must be done.'})
+        inputs_wrongNumber = struct('identifier', {'stbx:comons:err997'}, 'message', {'Wrong number of inputs.'})
+        inputs_mustBeSameSize = struct('identifier', {'stbx:comons:err996'}, 'message', {'All inputs must have the same size.'})
         
     end
     
