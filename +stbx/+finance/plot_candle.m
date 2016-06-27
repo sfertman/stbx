@@ -24,9 +24,7 @@ greyColor = 0.65*[1,1,1];
 gridColor = pi/10*[1,1,1];
 axesColor = [0,0,0];
 
-
-assert(length(unique(cellfun('length', varargin))) == 1, 'All inputs must be of the same length.');
-
+assert_allInputsSameSize(varargin);
 
 % input validation
 if nargin == 4
@@ -40,7 +38,7 @@ else
 end
 
 if ~exist('t', 'var');
-    t = 1:length(open_);
+    t = reshape(1:length(open_), size(open_));
 end
     
 if exist('vol_', 'var')
@@ -111,4 +109,10 @@ set(ax2, 'Color', axesColor, 'XColor', gridColor, 'YColor', gridColor);
 hold off;
 varargout = {ax1, ax2};
 
+end
+
+function assert_allInputsSameSize(args)
+szArgs = cellfun(@size, args.','UniformOutput',false);
+szArgs = cell2mat(szArgs);
+assert(size(unique(szArgs,'rows'),1) == 1, stbx.commons.err.inputs_mustBeSameSize);
 end
