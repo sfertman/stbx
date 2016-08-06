@@ -7,22 +7,21 @@ function dirs_ = getDirTree( varargin )
 %   '#relative' -- (logical) if true returns relative paths otherwise,
 %       returns full path (defaults to false)
 %   '#ignore' -- (char, cellstr) directory list to ignore (defaults to {})
-%   '#strcut' -- (logical) if true returns dir tree in a structure
+%   '#struct' -- (logical) if true returns dir tree in a structure
 %   (defaults to false) 
 % 
 % Returns: 
 %   paths of subdirectories
 %
 
-% <TODO> 
-% scrape all parameters and values
-% ignore list default has to be {'.', '..'} to get rid of some of 'dir'
-%   function outputs
+% <TODO>
+%   (-) make #ignore list accept regular expressions.
+%   (-) make #include list and make it work with regular expressions too.
+%   (-) start and finish matlab structure output
 % </TODO>
 
-[isRelative, ignores_, isStruct, varargin] = parseParamsPrefix( varargin, { ...
+[isRelative, ignores_, isStruct, varargin] = parseParams( varargin, { ...
     {'#relative', @(u) islogical(u) && isscalar(u),  '''#relative'' parameter must be logical scalar.', false}, ...
-    {'#ignore', @(u) (  ischar(u) || iscellstr(u)), 'Ignore list must be a single string or cellstr.', {}}, ...
     {'#struct', @(u) islogical(u) && isscalar(u),  '''#struct'' parameter must be logical scalar.', false},...
     });
     
@@ -74,7 +73,7 @@ dirs_(cellfun(@(d) any(strcmp(d, ignore_)), {dirs_.name})) = [];
 dirs_ = {dirs_.name}.';
 end
 
-
+error(stbx.commons.err.underConstruction);
 function dirs_ = getSubDirsRecursiveStruct(dirs_, ignore_)
 
 end

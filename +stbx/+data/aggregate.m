@@ -25,7 +25,7 @@ function [ output_args ] = aggregate( X, G, F, C )
 %
 % See also:
 %   unique, cellstr, cetegorical, function_handle, cellfun
-
+error(stbx.commons.err.underConstruction)
 narginchk(2,3); 
 
 % deal with X

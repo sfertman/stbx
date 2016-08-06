@@ -22,12 +22,12 @@ function [ output_args ] = mictg( varargin )
 % MICTG computes the mutual information between categorical and real random
 % variables.
 % Usage posibilities:
-% MICTG(X,C) --- X is data, C is category specification. C can be a vector of
+% MICTG(X,C) -- X is data, C is category specification. C can be a vector of
 %   several types which may be considered categorical: any type of integer,
 %   cell array of strings (cellstr) and Matlab's builtin categorical array.
 %   Every data point must be assigned with a category, i.e., X and G must 
 %   have the same length.
-% MICTG(V1,V2,V3,...) --- assumes that the inputs V1,V2,V3,... are data 
+% MICTG(V1,V2,V3,...) -- assumes that the inputs V1,V2,V3,... are data 
 %   points given categories C1,C2,C3,... implicitly specified by the number
 %   of input vectors.
 %

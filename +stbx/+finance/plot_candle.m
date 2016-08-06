@@ -34,7 +34,8 @@ elseif nargin == 5
 elseif nargin == 6
     [open_, close_, high_, low_, vol_, t] = deal(varargin{:});
 else
-    error(stbx.commons.err.inputs_wrongNumber).
+    % shouldn't be triggered because of narginchk at the top
+    error(stbx.commons.err.inputs_wrongNumber) 
 end
 
 if ~exist('t', 'var');

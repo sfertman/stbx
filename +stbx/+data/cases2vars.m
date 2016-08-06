@@ -1,7 +1,10 @@
 function [dataOut, keysOut, varsOut] = cases2vars( data, keyVars, idxVars )
 % CASES2VARS performs SPSS style restructuring of tabular data. 
+%
+% CASES2VARS(data, keyVars, idxVars)
+%
 % data -- tabular data of type:
-%   (-) numerical matrix
+%   (+) numerical matrix
 %   (-) cell array of mixed numerical and categorical (cellstr /
 %       cetegorical / integer)
 %

@@ -1,5 +1,6 @@
-clear all
+% clear all
 A = magic(5);
+return
 A = {'a','b','c','d','e','f','gh','ijk'};
 A = A(:); L = length(A);
 S = {[1,2,3].'; 5; [6,7].'; (1:5).'};

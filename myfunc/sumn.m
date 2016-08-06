@@ -1,6 +1,6 @@
 function sumx = sumn( X, varargin )
 % SUMN(X, dims) sums up a multidimensional array 'X' along the dimensions
-% specified by 'dims'. 'dims' can be specified as aone dimensional vector
+% specified by 'dims'. 'dims' can be specified as a one dimensional vector
 % or a list of inputs one by one. This functions does not have any sanity
 % checks so, if you input anything other than what is specified here,
 % expect the unexpected.

@@ -1,4 +1,4 @@
-function [ output_args ] = spooled( varargin )
+function sp = varpooled( varargin )
 % SPOOLED(x1,x2,...) computes the pooled standard deviation of input
 %   vectors x1, x2, ...
 % SPOOLED(X) computes pooled std of all the columns of matrix X
@@ -25,6 +25,14 @@ function [ output_args ] = spooled( varargin )
 
 error(stbx.commons.err.underConstruction)
 
+% sketching out how to calculate pooled var
+
+% populations -- assuming cell of numerical data
+pops;
+% pooled sigma
+lens_p = cellfun('length', p) - 1; % very fast 
+vars_p = cellfun( @var, p ); % default 2nd var argument is 0
+sp = lens_p.*vars_p/sum(lens_p);
 
 end
 
