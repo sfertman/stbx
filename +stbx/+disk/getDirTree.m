@@ -22,6 +22,7 @@ function dirs_ = getDirTree( varargin )
 
 [isRelative, ignores_, isStruct, varargin] = parseParams( varargin, { ...
     {'#relative', @(u) islogical(u) && isscalar(u),  '''#relative'' parameter must be logical scalar.', false}, ...
+    {'#ignore', @(u) (ischar(u) || iscellstr(u)), 'Ignore list must be a single string or cellstr.', {}}, ...
     {'#struct', @(u) islogical(u) && isscalar(u),  '''#struct'' parameter must be logical scalar.', false},...
     });
     
@@ -73,8 +74,8 @@ dirs_(cellfun(@(d) any(strcmp(d, ignore_)), {dirs_.name})) = [];
 dirs_ = {dirs_.name}.';
 end
 
-error(stbx.commons.err.underConstruction);
-function dirs_ = getSubDirsRecursiveStruct(dirs_, ignore_)
 
+function dirs_ = getSubDirsRecursiveStruct(dirs_, ignore_)
+error(stbx.commons.err.underConstruction);
 end
 

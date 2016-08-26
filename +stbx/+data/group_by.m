@@ -1,7 +1,7 @@
 function varargout = group_by( X, G, SORTFLAG )
 % GROUP_BY splits the data in X by categories in C. 
 % 
-% B = GROUP_BY(X, G) -- returns data in X binned/grouped by unique rows in 
+% B = GROUP_BY(X,G) -- returns data in X binned/grouped by unique rows in 
 %   G. The data is put into cell array B which contains sub-arrays of X. X
 %   can be any n-d array, including cell array. G can be a column vector or
 %   a matrix. X will be split along the dimension that matches the first
@@ -56,7 +56,10 @@ end
 
 % find unique rows in G
 if iscellstr(G)
+    % common case of grouping by names of categories given in cellstr
     [C,~,IC] = uniquerows_cellstr(G, SORTFLAG); 
+elseif iscell(G) 
+    error('General cell arrays as categories are not supported, and generally, advised against.')
 else
     [C,~,IC] = unique(G,'rows', SORTFLAG);
 end
@@ -94,10 +97,11 @@ function [C, IA, IC] = uniquerows_cellstr(A, SORTFLAG)
 
 if ~exist('SORTFLAG', 'var')
     SORTFLAG = 'sorted';
-else
-    assert(ischar(SORTFLAG), 'SORTFLAG parameter must be of type char.');
-    assert(any(strcmpi(SORTFLAG, {'sorted', 'stable'})), 'Unknown input parameter: ''%s''.', SORTFLAG);
 end
+% % else %%% this is an internal function, it doesn't have to assert every little thing
+% %     assert(ischar(SORTFLAG), 'SORTFLAG parameter must be of type char.');
+% %     assert(any(strcmpi(SORTFLAG, {'sorted', 'stable'})), 'Unknown input parameter: ''%s''.', SORTFLAG);
+% % end
 
 [~,~,IC] = arrayfun(@(u) unique(A(:,u),'sorted'), 1:size(A,2), 'UniformOutput', false); 
 [~, IA, IC] = unique([IC{:}], 'rows', SORTFLAG);
@@ -108,7 +112,7 @@ function B = accumarray_group_cell(IC, X)
 % The second parameter, VAL in the builtin accumarray function can only be
 % numeric, logical, or character vector. When the input data for grouping
 % in stbx.data.group_by is a cell array, the builtin accumarray will fail.
-% This function takes care of bussiness in these cases.
+% This function takes care of bussiness in this case.
 
 % map values of X into their positions in X
 X_idx = reshape(1:numel(X), size(X));

@@ -2,33 +2,19 @@ function [ F,X ] = ecdfn( Y, C )
 % ECDFN a clone of Matlab's builtin ecdf but with support for
 % multidimensional variables.
 % <TODO>
-%   (-) make it work in the same way as the builtin
+%   (-) make it work in the same way as the builtin excluding the plot (no
+%       way of plotting anything with more than 3D anyway).
 % </TODO>
 
-%{-
-% maybe I don't even need to sort it
-[Ys, Is] = sortrows(Y, [1,2]); % sorting D ascending
-
 if ~exist('C','var') || isempty(C)
-    Cs = ones(size(Ys,1),1);
-else
-    Cs = C(Is); % sorting C according to Ds
+    C = ones(size(Y,1),1);
 end
 
-X = Ys;
-F = cumsum(Cs);
-F = F/F(end);
+% //TODO:
+%   this is a brute force approach. works for now, but will have to find a
+%   more intelligent way of doing it in the future. look at spatial
+%   indexind for more efficient algorithms in higher dimensionality data
+%
 
-
-
-
-
-
-%} 
-
-% % indicator function
-% IND_func = @(x,y) all(x(:) >= y(:));
-
-
-end
-
+F = arrayfun(@(i) sum(C(all(bsxfun(@le,Y, Y(i,:)), 2))), (1:size(Y,1)).');
+X = Y;

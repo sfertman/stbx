@@ -90,19 +90,3 @@ if nargout_ > 0
     nargout_ = nargout_ - 1;    
 end
 
-return
-%{
-transOut = transVars(:); % making a column var from all the cols in transVars
-fixedOut = repmat(data, [szTvars(2), 1]);
-idxOut = repmat(linspace(1, nrows, nrows).', [szTvars(2), 1]);
-
-nanIdx = isnan(transOut);
-transOut(nanIdx) = [];
-fixedOut(nanIdx, :) = [];
-idxOut(nanIdx) = [];
-%}
-
-
-
-end
-

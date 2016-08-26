@@ -39,7 +39,7 @@ keyVarsBinned = stbx.arr.cellsubsref(keyVars, binIdx);
 % could also be done in a more stable way <v> if the above <^> dowsn't work
 % keyVarsBinned = cellfun(@(r) keyVars(r,:), binIdx, 'UniformOutput', false);
 
-% make sure keyVars uniquely identify records after grouping -- may be time consuning
+% make sure keyVars uniquely identify records after grouping -- may be time consuming
 assert(all(cellfun(@(k) size(k,1) == size(uniquerows_cellstr(k),1), keyVarsBinned)), 'Input key variables do not uniquely identify records for each value index vars.')
 ICbinned = stbx.arr.cellsubsref(IC, binIdx);
 
